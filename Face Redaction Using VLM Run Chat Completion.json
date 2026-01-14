@@ -1,0 +1,378 @@
+{
+  "name": "Face Redaction Using VLM Run Chat Completion",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Upload Image",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "data",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf, .csv",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -400,
+        144
+      ],
+      "id": "dbc1bb8b-e914-40d2-964b-879ddd6ad500",
+      "name": "Upload Image",
+      "webhookId": "82848bc4-5ea2-4e5a-8bb6-3c09b94a8c5d",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "sendDocument",
+        "chatId": "1872183963",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        576,
+        128
+      ],
+      "id": "9c8b9c94-9960-4b5e-a625-33d48162c51f",
+      "name": "Send Image",
+      "webhookId": "e40c3e5a-90cf-4f16-bdd6-f3c50dc2684e",
+      "credentials": {
+        "telegramApi": {
+          "id": "yr6HR896cjhh3azp",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "Patient Info",
+        "driveId": {
+          "__rl": true,
+          "value": "My Drive",
+          "mode": "list",
+          "cachedResultName": "My Drive",
+          "cachedResultUrl": "https://drive.google.com/drive/my-drive"
+        },
+        "folderId": {
+          "__rl": true,
+          "value": "1S6baavqJn98MjUlbB6KtmARCWuWEekIZ",
+          "mode": "list",
+          "cachedResultName": "test_data",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1S6baavqJn98MjUlbB6KtmARCWuWEekIZ"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        800,
+        128
+      ],
+      "id": "2388741c-fa37-43fa-81f0-29d5d72b2070",
+      "name": "Upload File",
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "NZLNwCDDYmGxAK2K",
+          "name": "Google Drive account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "\n# 📌 Face Redaction – Intro Use Case\n\nThis workflow demonstrates an **end-to-end automated face redaction pipeline** using **VLM Run Chat Completion** in n8n.\n\n- A user uploads an image through a form.\n- The image is processed by a VLM to **detect and blur all human faces**.\n- The model returns a **secure pre-signed download URL** for the redacted image.\n- The image is automatically **downloaded, stored in Google Drive, and shared via Telegram**.\n\n**Use cases:** privacy protection, healthcare data handling, surveillance anonymization, and GDPR-compliant media processing.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 464,
+        "width": 560,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -608,
+        -512
+      ],
+      "typeVersion": 1,
+      "id": "f988e71c-ca66-48a8-87fa-7c581daadbe0",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# 🟧 Generate Redaction on Image\n\n- Uses **VLM Run Chat Completion** with `inputType: image`.\n- Model processes the image and performs:\n  - Human face detection\n  - Blurring + redaction\n- Output contains a **signed GCS URL** of the redacted image.\n\n",
+        "height": 464,
+        "width": 560,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -48,
+        -512
+      ],
+      "typeVersion": 1,
+      "id": "b2f74bcb-fef4-4c38-93b0-f409e5ef7d3b",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# 🟪 Artifact Handling\n\n- Extract generated image/video IDs from VLM Run response.\n- Use regex to capture both formats:\n  - Plain: img_182573\n  - With tags: <img_ref>img_c7ae8c</img_ref>\n- Fetch artifacts using:\n  - Get Image Artifact → img_* ID\n- Artifacts are ready to send or further \nprocess in the workflow.",
+        "height": 512,
+        "width": 464,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        -512
+      ],
+      "typeVersion": 1,
+      "id": "47ac6119-3f00-4cd8-ad91-83240a4f0325",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# 🟩 Upload to Drive & Send via Telegram\n\n- The downloaded image is uploaded to **Google Drive** under the specified folder.\n- **Google Drive OAuth2** credentials are required with upload permissions.\n- The same image is sent to a Telegram chat via the **Send Image** node.\n- Ensure Telegram Bot token and chat ID are correctly configured.\n- This enables automated multi-channel sharing of processed images.\n",
+        "height": 512,
+        "width": 368,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        976,
+        -224
+      ],
+      "typeVersion": 1,
+      "id": "1a2f8f21-b08c-4334-b05d-05f83d6b6ace",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 288,
+        "width": 464,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "b3253a3f-490d-4a52-b610-6d9aca623411",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cc547cf5-7a72-47e2-9909-9045dac565fe",
+              "name": "Prompt",
+              "value": "Generate an image by hiding all the human face by blurring and redaction.  Give valid URL reference of the generated image.",
+              "type": "string"
+            },
+            {
+              "id": "7e66aa09-0c74-4376-8945-b97c40ab8748",
+              "name": "Image_Link",
+              "value": "={{ $json.public_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        320,
+        64
+      ],
+      "id": "989c072d-b11d-46e9-8925-97e36edec544",
+      "name": "Give Prompt"
+    },
+    {
+      "parameters": {
+        "operation": "file",
+        "fileOperation": "upload"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        32,
+        -208
+      ],
+      "id": "7a8aebe5-9f29-48b3-a817-c81665712f11",
+      "name": "Upload Image1",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "chatCompletion",
+        "prompt": {
+          "messages": [
+            {
+              "content": "={{ $json.Prompt }}"
+            }
+          ]
+        },
+        "inputType": "image",
+        "imageUrls": {
+          "url": [
+            {
+              "url": "={{ $json.Image_Link }}"
+            }
+          ]
+        }
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        320,
+        -208
+      ],
+      "id": "566db8bf-1f5b-442d-9956-d9807c46ab10",
+      "name": "VLM Run",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# 🟦 Prompt \n#    Preparation\n\n- Prompt instructs \n  the model to:\n- Blur and \n  redact **all \n  human faces**\n- Return a **pre-signed \n  downloadable URL**\n",
+        "height": 336,
+        "width": 560,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -48,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "76baf429-7ca7-4790-8937-ff87677ee7b8",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "# 🟨 Input & Image Upload\n\n- User uploads an image via **Form Trigger**.\n",
+        "height": 336,
+        "width": 560,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -608,
+        -48
+      ],
+      "typeVersion": 1,
+      "id": "07f9ceb4-c391-4b11-987d-50e7804f8bea",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "operation": "artifacts",
+        "objectId": "={{ ($json.choices[0].message.content.match(/(?:<img_ref>)?(img_[a-zA-Z0-9]+)(?:<\\/img_ref>)?/) || [null, null])[1] }}",
+        "sessionId": "={{ $json.session_id }}"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        688,
+        -160
+      ],
+      "id": "d26a11f9-00bb-4868-add5-0ac49917c577",
+      "name": "Get Image Artifact",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Upload Image": {
+      "main": [
+        [
+          {
+            "node": "Upload Image1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Give Prompt": {
+      "main": [
+        [
+          {
+            "node": "VLM Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Image1": {
+      "main": [
+        [
+          {
+            "node": "Give Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VLM Run": {
+      "main": [
+        [
+          {
+            "node": "Get Image Artifact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image Artifact": {
+      "main": [
+        [
+          {
+            "node": "Send Image",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upload File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c536c3fa-d0a0-47cc-9540-4c65d7c6e41d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0a7ae129a7d703150135f6cc24d0469f20ffd22b5ed59c23ee3e0608264e6d98"
+  },
+  "id": "BFLdfFKkgXfQTqJ8",
+  "tags": []
+}
