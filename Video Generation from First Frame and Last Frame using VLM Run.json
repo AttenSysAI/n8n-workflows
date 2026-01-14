@@ -1,0 +1,450 @@
+{
+  "name": "Video Generation from First Frame and Last Frame using VLM Run",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f753c669-2948-4cae-9e4a-569fbfcbc0ff",
+      "name": "When clicking 'Test workflow'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        208,
+        448
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "file",
+        "fileOperation": "upload"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        576
+      ],
+      "id": "e464e79f-79d7-412c-ac80-aad68887c250",
+      "name": "VLM Run",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "file",
+        "fileOperation": "upload"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        368
+      ],
+      "id": "7706425f-5718-479b-9df9-8f0d27a744b9",
+      "name": "VLM Run1",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "assign1",
+              "name": "startFrameUrl",
+              "value": "={{ $json.public_url }}",
+              "type": "string"
+            },
+            {
+              "id": "assign2",
+              "name": "frameType",
+              "value": "start",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        1312,
+        368
+      ],
+      "id": "b1d86806-ed9d-4be1-8cf7-e93b7cb47118",
+      "name": "Extract Start URL1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "assign1",
+              "name": "endFrameUrl",
+              "value": "={{ $json.public_url }}",
+              "type": "string"
+            },
+            {
+              "id": "assign2",
+              "name": "frameType",
+              "value": "end",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.3,
+      "position": [
+        1312,
+        576
+      ],
+      "id": "222bb8b3-94c5-42ff-9b14-f82fd189eaf6",
+      "name": "Extract End URL1"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combinationMode": "mergeByPosition",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 2.1,
+      "position": [
+        1632,
+        480
+      ],
+      "id": "c09f117f-145d-4c46-91ac-5abece093a29",
+      "name": "Merge URLs1"
+    },
+    {
+      "parameters": {
+        "operation": "chatCompletion",
+        "prompt": {
+          "messages": [
+            {
+              "role": "system",
+              "content": "You are a video creator. "
+            },
+            {
+              "content": "Create a video that smoothly transitions from the given start frame to the given end frame. The video must strictly maintain the first and last frames exactly as provided. Ensure the intermediate frames form a natural, continuous progression between the start and end frames. Output the final video as a downloadable file or provide a valid URL for access. "
+            }
+          ]
+        },
+        "inputType": "file",
+        "fileUrls": {
+          "url": [
+            {
+              "url": "={{ $json.startFrameUrl }}"
+            },
+            {
+              "url": "={{ $json.endFrameUrl }}"
+            }
+          ]
+        },
+        "responseFormat": "{\n  \"type\": \"json_schema\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"url\": {\n        \"type\": \"string\",\n        \"description\": \"The URL reference (e.g., url_94e682) of the generated content\"\n      },\n      \"message\": {\n        \"type\": \"string\",\n        \"description\": \"The full message content\"\n      }\n    },\n    \"required\": [\"url\"]\n  }\n}"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        2032,
+        496
+      ],
+      "id": "b1a60f36-c27d-42f4-8e17-77c2e96703f5",
+      "name": "VLM Run2",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 🎬 Frame-to-Video Workflow\n\nGenerates smooth transition videos between two frames:\n- Downloads start and end frames from Google Drive\n- Uploads to VLM Run for processing\n- Creates video with natural progression\n- Returns downloadable video file",
+        "height": 352,
+        "width": 480,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        80,
+        48
+      ],
+      "typeVersion": 1,
+      "id": "9673d9fa-a8ee-4bd6-8752-99c34f4e2abc",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## 📥 Input Frames\n\n**Start Frame**: First frame of video\n**End Frame**: Last frame of video\n\nBoth frames are downloaded as JPEG files.",
+        "height": 688,
+        "width": 320,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        576,
+        48
+      ],
+      "typeVersion": 1,
+      "id": "e54dec69-b07d-49bd-bd9f-5b0ef15792c4",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## 📤 Upload to VLM Run\n\nUploads frame files to VLM Run service.\nReturns `public_url` for each frame that can be referenced in API calls.",
+        "height": 688,
+        "width": 288,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        912,
+        48
+      ],
+      "typeVersion": 1,
+      "id": "e8a3dc5e-4bf7-4834-a4b4-4bc7fb2213bb",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## 🔗 URL Extraction\n\nExtracts public URLs from upload responses:\n- `startFrameUrl`: URL for start frame\n- `endFrameUrl`: URL for end frame\n\nAdds `frameType` field for identification.",
+        "height": 688,
+        "width": 272,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1216,
+        48
+      ],
+      "typeVersion": 1,
+      "id": "cb43294c-7d58-4e68-99f8-750b5b8df733",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## 🔀 Merge Frame URLs\n\nCombines start and end frame URLs into single object:\n```json\n{\n  \"startFrameUrl\": \"...\",\n  \"endFrameUrl\": \"...\"\n}\n```\nReady for video generation.",
+        "height": 496,
+        "width": 384,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1504,
+        144
+      ],
+      "typeVersion": 1,
+      "id": "31cf50f6-140d-4f83-a238-8e9c6209d935",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## 🎥 Video Generation\n\n**VLM Run Chat Completion**\n- Receives both frame URLs as input files\n- Prompt: Create smooth transition video\n- Maintains exact first/last frames\n- Structured JSON response with video URL reference\n\n**Output Schema**:\n```json\n{\n  \"url\": \"url_xxxxx\",\n  \"message\": \"...\"\n}\n```",
+        "height": 496,
+        "width": 352,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1904,
+        144
+      ],
+      "typeVersion": 1,
+      "id": "1ac698ee-21a7-4fee-8569-21d78e443c3c",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## 📦 Artifact Handling\n\nRetrieves the generated video using:\n\n- sessionId returned from the Chat Completion node\n\n- objectId from the model's structured JSON\n\nAutomatically downloads output files produced by VLM Run",
+        "height": 496,
+        "width": 336,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2272,
+        144
+      ],
+      "typeVersion": 1,
+      "id": "865a24df-5c43-4a34-bade-58f960e032c2",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "url": "https://t4.ftcdn.net/jpg/01/72/66/01/360_F_172660110_YSMUHRT9oMNyV4hkzzxjnb8oIohI8U7X.jpg",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        368
+      ],
+      "id": "9944b672-8417-4b65-a604-9cee9cd55c15",
+      "name": "First Frame"
+    },
+    {
+      "parameters": {
+        "url": "https://5.imimg.com/data5/SELLER/Default/2022/6/ZB/TH/RT/94422302/bee-hive-removal-500x500.jpg",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        672,
+        576
+      ],
+      "id": "02791abf-1019-49cc-9796-bc97c245b571",
+      "name": "Last Frame"
+    },
+    {
+      "parameters": {
+        "operation": "artifacts",
+        "objectId": "={{ $json.choices[0].message.content.url }}",
+        "sessionId": "={{ $json.session_id }}"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        2400,
+        496
+      ],
+      "id": "9aefa454-d08d-43c3-b2fc-130f0d92c0e3",
+      "name": "Download Artifact",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking 'Test workflow'": {
+      "main": [
+        [
+          {
+            "node": "First Frame",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Last Frame",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VLM Run": {
+      "main": [
+        [
+          {
+            "node": "Extract End URL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VLM Run1": {
+      "main": [
+        [
+          {
+            "node": "Extract Start URL1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Start URL1": {
+      "main": [
+        [
+          {
+            "node": "Merge URLs1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract End URL1": {
+      "main": [
+        [
+          {
+            "node": "Merge URLs1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge URLs1": {
+      "main": [
+        [
+          {
+            "node": "VLM Run2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VLM Run2": {
+      "main": [
+        [
+          {
+            "node": "Download Artifact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "First Frame": {
+      "main": [
+        [
+          {
+            "node": "VLM Run1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Last Frame": {
+      "main": [
+        [
+          {
+            "node": "VLM Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ad838ea4-6a35-41d6-b91c-9adba3e1c143",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0a7ae129a7d703150135f6cc24d0469f20ffd22b5ed59c23ee3e0608264e6d98"
+  },
+  "id": "2u0Vgx9yM71rFLrO",
+  "tags": []
+}
