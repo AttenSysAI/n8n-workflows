@@ -1,0 +1,349 @@
+{
+  "name": "Image to Ghibli Art Using VLM Run with Discord, Telegram, Pushover",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## 🟦 Upload Image (VLM Run – File Upload)\n\n- Receives the uploaded image from the Form Trigger.\n\n- Uploads the image to VLM Run storage.\n\n- Returns a publicly accessible image URL for downstream processing.\n\n\n\n\n\n## 🟪 VLM Run – Chat Completion (Image → Ghibli)\n\n- Takes the uploaded image as input.\n\n- Applies Ghibli-style artistic transformation (soft lighting, anime depth, painterly textures).\n\n- Returns a new pre-signed Google Cloud Storage URL for secure downloading.\n\n",
+        "height": 656,
+        "width": 720,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -192,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "2f350064-b24f-4ece-93fb-cf91cbdf69cf",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# 🟪 Artifact Handling\n\n- Extract generated image/video IDs from VLM Run response.\n- Use regex to capture both formats:\n  - Plain: img_182573\n  - With tags: <img_ref>img_c7ae8c</img_ref>\n- Fetch artifacts using:\n  - Get Image Artifact → img_* ID\n- Artifacts are ready to send or further \nprocess in the workflow.",
+        "height": 512,
+        "width": 464,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        528,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "27666c1f-7660-4c32-ae3b-27403a41af1f",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## 🟩 Send to Telegram\n\n- Sends the generated Ghibli image as a document.\n\n- Suitable for personal chats, groups, or broadcast channels.\n\n\n## 🟦 Send to Discord\n\n- Posts the generated image directly in a Discord channel.\n\n- Uses embedded image preview for better visual presentation.\n\n\n## 🟥 Push Notification (Pushover)\n\n- Sends a push notification with the generated image attached.\n\n\n",
+        "height": 512,
+        "width": 432,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1280,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "014a99b9-dfc7-4fa2-86c5-7605200a4cb9",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 512,
+        "width": 288,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        992,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "93091d28-37fa-4e2c-9b58-290893c98347",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "operation": "chatCompletion",
+        "prompt": {
+          "messages": [
+            {
+              "content": "=Generate a ghibli from input image. Give new valid URL for downloading the image without problem."
+            }
+          ]
+        },
+        "inputType": "image",
+        "imageUrls": {
+          "url": [
+            {
+              "url": "={{ $json.public_url }}"
+            }
+          ]
+        }
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        320,
+        304
+      ],
+      "id": "21c35caf-6dd3-4272-957c-075e2d5f559c",
+      "name": "VLM Run",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "formTitle": "Upload Image",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "data",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf, .csv",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -160,
+        304
+      ],
+      "id": "45557044-2bd9-4abc-817a-2fe200b1a8db",
+      "name": "Upload Image File",
+      "webhookId": "82848bc4-5ea2-4e5a-8bb6-3c09b94a8c5d",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "userKey": "um3cb8jg2empbgtregee15ofc1n5ra",
+        "message": "Here is the ghibli image-",
+        "priority": 0,
+        "additionalFields": {
+          "attachmentsUi": {
+            "attachmentsValues": {
+              "binaryPropertyName": "data"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        1088,
+        288
+      ],
+      "id": "bbae9cbd-1409-47bc-9e4e-26101a6963b0",
+      "name": "Push a message",
+      "credentials": {
+        "pushoverApi": {
+          "id": "oEil4ShjBgy0NPI7",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1453239288987648093",
+          "mode": "id"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1453239992628547665",
+          "mode": "list",
+          "cachedResultName": "test",
+          "cachedResultUrl": "https://discord.com/channels/1453239288987648093/1453239992628547665"
+        },
+        "content": "Here is the generated image",
+        "options": {},
+        "files": {
+          "values": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1088,
+        112
+      ],
+      "id": "7b238997-f194-4dc3-84a1-33aeabcdc8c6",
+      "name": "Send to Discord",
+      "webhookId": "7c7e5be7-6c8b-49d8-8585-47bb2a8f6b87",
+      "credentials": {
+        "discordOAuth2Api": {
+          "id": "uOu4syUaVyxfUBKO",
+          "name": "Discord account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendDocument",
+        "chatId": "1872183963",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1088,
+        -48
+      ],
+      "id": "87a95e61-a3a9-4f6b-bedd-f960cf402a76",
+      "name": "Send to Telegram",
+      "webhookId": "e40c3e5a-90cf-4f16-bdd6-f3c50dc2684e",
+      "credentials": {
+        "telegramApi": {
+          "id": "yr6HR896cjhh3azp",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "file",
+        "fileOperation": "upload"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        80,
+        304
+      ],
+      "id": "2beeb2cf-7fb1-4033-9b63-05c92984d855",
+      "name": "Upload Image",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# 📌 Ghibli Image Generation – Workflow Overview\n\nThis workflow accepts an uploaded image, converts it into a Studio Ghibli–style illustration using VLM Run Chat Completion, securely retrieves the generated asset via a signed URL, and automatically distributes the final image to Discord, Telegram, and Pushover.\n\n\n\n\n\n\n\n\n\n\n\n\n",
+        "height": 256,
+        "width": 720
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        528,
+        -320
+      ],
+      "typeVersion": 1,
+      "id": "b168c5a2-8170-461b-8b00-ee7ed3965e44",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "operation": "artifacts",
+        "objectId": "={{ ($json.choices[0].message.content.match(/(?:<img_ref>)?(img_[a-zA-Z0-9]+)(?:<\\/img_ref>)?/) || [null, null])[1] }}",
+        "sessionId": "={{ $json.session_id }}"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        704,
+        304
+      ],
+      "id": "1f752868-ca0e-495b-8677-96fe63cbabfa",
+      "name": "Get Image Artifact",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "VLM Run": {
+      "main": [
+        [
+          {
+            "node": "Get Image Artifact",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Image File": {
+      "main": [
+        [
+          {
+            "node": "Upload Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Push a message": {
+      "main": [
+        []
+      ]
+    },
+    "Upload Image": {
+      "main": [
+        [
+          {
+            "node": "VLM Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image Artifact": {
+      "main": [
+        [
+          {
+            "node": "Send to Telegram",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send to Discord",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Push a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "c8c45196-8f26-42a9-b42d-6373a3c402f6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0a7ae129a7d703150135f6cc24d0469f20ffd22b5ed59c23ee3e0608264e6d98"
+  },
+  "id": "FdjvlVFQDdZmKA3o",
+  "tags": []
+}
