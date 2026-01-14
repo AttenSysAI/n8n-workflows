@@ -1,0 +1,496 @@
+{
+  "name": "Auto Meeting Summarizer with Google Drive, VLM Run to Sheets",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1S6baavqJn98MjUlbB6KtmARCWuWEekIZ",
+          "mode": "list",
+          "cachedResultName": "test_data",
+          "cachedResultUrl": "https://drive.google.com/drive/folders/1S6baavqJn98MjUlbB6KtmARCWuWEekIZ"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "id": "73516f88-9917-4c89-af80-b6c5a51a4350",
+      "name": "Looking for uploading file",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "position": [
+        1984,
+        96
+      ],
+      "typeVersion": 1,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "NZLNwCDDYmGxAK2K",
+          "name": "Google Drive account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "id",
+          "value": "={{ $json.id }}"
+        },
+        "options": {}
+      },
+      "id": "2840e7f6-0c39-4015-9ca0-efcc6f166d87",
+      "name": "Download file",
+      "type": "n8n-nodes-base.googleDrive",
+      "position": [
+        2240,
+        96
+      ],
+      "typeVersion": 3,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "NZLNwCDDYmGxAK2K",
+          "name": "Google Drive account 6"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "outputFieldName": "Date",
+        "options": {}
+      },
+      "id": "47fd2b38-83b0-4795-b3ca-b31b277e9925",
+      "name": "Get date",
+      "type": "n8n-nodes-base.dateTime",
+      "position": [
+        3072,
+        48
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $json.Date }}",
+        "options": {}
+      },
+      "id": "752915f8-07fb-4a41-bf46-5957fb14de85",
+      "name": "Format date",
+      "type": "n8n-nodes-base.dateTime",
+      "position": [
+        3296,
+        48
+      ],
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1-CLRaLCiIp29hWEDWMcZYMh-tTHt6vwknPcjs-DZW6s",
+          "mode": "list",
+          "cachedResultName": "test_sheet",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1-CLRaLCiIp29hWEDWMcZYMh-tTHt6vwknPcjs-DZW6s/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1bzblFl5UzsJ7Rdl9ERCO0q3aI_QtcoJV3kNwjipYN-8/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {
+            "formattedDate": "={{ $json.formattedDate }}",
+            "choices": "="
+          },
+          "matchingColumns": [
+            "formattedDate"
+          ],
+          "schema": [
+            {
+              "id": "formattedDate",
+              "displayName": "formattedDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "object",
+              "displayName": "object",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "created",
+              "displayName": "created",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "choices",
+              "displayName": "choices",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "usage",
+              "displayName": "usage",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "system_fingerprint",
+              "displayName": "system_fingerprint",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "session_id",
+              "displayName": "session_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "1b30e666-1850-46cd-a237-f1bda8819c60",
+      "name": "Save the summary",
+      "type": "n8n-nodes-base.googleSheets",
+      "position": [
+        3760,
+        208
+      ],
+      "typeVersion": 4.5,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "WJQWRG6ORYZJDFNU",
+          "name": "Google Sheets account 7"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 🟦 File Detection & Download\n\nThese nodes continuously watch the specified Google Drive folder.\nWhen a new file is uploaded, the workflow triggers automatically and downloads that file for processing.",
+        "height": 364,
+        "width": 500,
+        "color": 7
+      },
+      "id": "23019748-28aa-47e2-8d0b-60ad7af74937",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1920,
+        -96
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🟪 Upload to VLM Run\n\nAfter downloading, the file is uploaded to VLM Run storage.\nThis creates a publicly accessible URL so the model can read the video and generate a structured summary.",
+        "height": 364,
+        "width": 544,
+        "color": 7
+      },
+      "id": "46806ceb-fa1c-414d-a94c-ddf736254614",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2432,
+        -96
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## 🟩 Generate Meeting Summary\n\nThis node sends the video file URL to VLM Run’s Chat Completion API.\nThe model analyzes the video and returns a JSON response containing: Meeting date, Attendees, Agenda points, Summary, Action items.",
+        "height": 492,
+        "width": 480,
+        "color": 7
+      },
+      "id": "5dbe24fe-f7e4-44d8-9de9-ab8b77ce06ed",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2992,
+        -144
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "file",
+        "fileOperation": "upload"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        2528,
+        96
+      ],
+      "id": "e64cfba0-702e-46a8-92f1-6ddd055692e6",
+      "name": "Upload Recorded File",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "chatCompletion",
+        "prompt": {
+          "messages": [
+            {
+              "content": "Explain me the video with date"
+            }
+          ]
+        },
+        "inputType": "file",
+        "fileUrls": {
+          "url": [
+            {
+              "url": "={{ $json.public_url }}"
+            }
+          ]
+        },
+        "responseFormat": "{\n  \"type\": \"json_schema\",\n  \"name\": \"meeting_summary\",\n  \"strict\": true,\n  \"schema\": {\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n    \"type\": \"object\",\n    \"properties\": {\n      \"meeting_date\": {\n        \"type\": \"string\",\n        \"format\": \"date\",\n        \"description\": \"Date of the meeting in YYYY-MM-DD format\"\n      },\n      \"attendees\": {\n        \"type\": \"array\",\n        \"description\": \"List of attendees\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      },\n      \"agenda_points\": {\n        \"type\": \"array\",\n        \"description\": \"List of agenda topics discussed\",\n        \"items\": {\n          \"type\": \"string\"\n        }\n      },\n      \"summary\": {\n        \"type\": \"string\",\n        \"description\": \"Detailed meeting summary\"\n      },\n      \"action_items\": {\n        \"type\": \"array\",\n        \"description\": \"List of follow-up tasks assigned\",\n        \"items\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"task\": {\n              \"type\": \"string\",\n              \"description\": \"Description of the task\"\n            },\n            \"assigned_to\": {\n              \"type\": \"string\",\n              \"description\": \"Person responsible\"\n            },\n            \"due_date\": {\n              \"type\": \"string\",\n              \"format\": \"date\",\n              \"description\": \"Deadline in YYYY-MM-DD format\"\n            }\n          },\n          \"required\": [\"task\", \"assigned_to\", \"due_date\"],\n          \"additionalProperties\": false\n        }\n      }\n    },\n    \"required\": [\n      \"meeting_date\",\n      \"attendees\",\n      \"agenda_points\",\n      \"summary\"\n    ],\n    \"additionalProperties\": false\n  }\n}\n"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        2800,
+        96
+      ],
+      "id": "d7c7a8ff-45af-4a04-8461-2e4ff06c6207",
+      "name": "Generate Summary",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 🟧 Append to Google Sheet\n\nThe formatted meeting date and generated summary are added as a new row in the connected Google Sheet.\nThis keeps an auto-updated history of processed meetings. ",
+        "height": 364,
+        "width": 480,
+        "color": 7
+      },
+      "id": "62ce2ac9-b4bc-44d2-800e-cb0836d1f005",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        3488,
+        -16
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        3184,
+        208
+      ],
+      "id": "6952c908-bfd4-49a1-9ece-8bc027b17cc0",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "fieldsToAggregate": {
+          "fieldToAggregate": [
+            {
+              "fieldToAggregate": "formattedDate",
+              "renameField": true,
+              "outputFieldName": "Meeting Date"
+            },
+            {
+              "fieldToAggregate": "choices[0].message.content",
+              "renameField": true,
+              "outputFieldName": "Summary"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        3552,
+        208
+      ],
+      "id": "d3235d78-27b5-4a92-8ab8-fb491ea4f1d4",
+      "name": "Aggregate"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get date": {
+      "main": [
+        [
+          {
+            "node": "Format date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format date": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download file": {
+      "main": [
+        [
+          {
+            "node": "Upload Recorded File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Looking for uploading file": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Recorded File": {
+      "main": [
+        [
+          {
+            "node": "Generate Summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Summary": {
+      "main": [
+        [
+          {
+            "node": "Get date",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Save the summary",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "87b71665-296a-4629-a183-607229f894d7",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0a7ae129a7d703150135f6cc24d0469f20ffd22b5ed59c23ee3e0608264e6d98"
+  },
+  "id": "7ADg5pSpjdTrULl9",
+  "tags": []
+}
