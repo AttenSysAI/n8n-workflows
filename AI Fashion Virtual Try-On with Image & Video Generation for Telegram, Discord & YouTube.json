@@ -1,0 +1,727 @@
+{
+  "name": "AI Fashion Virtual Try-On with Image & Video Generation for Telegram, Discord & YouTube",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Upload Image",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "data",
+              "fieldType": "file",
+              "acceptFileTypes": ".pdf, .csv",
+              "requiredField": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        272
+      ],
+      "id": "4c80be76-c312-40d0-9853-33dd9252027c",
+      "name": "Upload Image",
+      "webhookId": "82848bc4-5ea2-4e5a-8bb6-3c09b94a8c5d",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "sendDocument",
+        "chatId": "1872183963",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1840,
+        528
+      ],
+      "id": "e539f113-df62-4ab6-af8f-a23b14267b5b",
+      "name": "Send Image",
+      "webhookId": "e40c3e5a-90cf-4f16-bdd6-f3c50dc2684e",
+      "credentials": {
+        "telegramApi": {
+          "id": "yr6HR896cjhh3azp",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# 📌 Virtual Try-On – Intro Use Case\n\nAllow users to visualize how a dress looks on a person.\nUpload model & dress images, generate a realistic try-on\nimage and fashion video using VLM Run with secure links.\n",
+        "height": 176,
+        "width": 608,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -320,
+        -64
+      ],
+      "typeVersion": 1,
+      "id": "f37a84f0-a8e6-4424-9b89-f9a6e96a7795",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# 🟪 Merge & Aggregate\n\n- Merge model + dress image metadata\n- Aggregate items into a single payload\n- Wait node ensures async safety\n\n",
+        "height": 800,
+        "width": 480,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        160,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "a61743f7-8bd9-4e88-b9dd-b01664a86a02",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# 🟪 Artifact Handling\n\n- Extract generated image/video IDs from VLM Run response.\n- Use regex to capture both formats:\n  - Plain: img_182573\n  - With tags: <img_ref>img_c7ae8c</img_ref>\n- Fetch artifacts using:\n  - Get Image Artifact → img_* ID\n  - Get Video Artifact → url_* ID\n- Pass session ID for secure access.\n- Artifacts are ready to send via Telegram, upload to Discord, or further process in the workflow.\n",
+        "height": 800,
+        "width": 544,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1152,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "a462f48c-6feb-47e0-acb3-9c8d95bba5eb",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "\n\n\n\n\n# 🟩 Upload to Discord, YouTube & Send via Telegram\n\n- Send generated image/video via **Telegram**\n- Post image preview to **Discord** using embed URL\n- Upload generated fashion video to **YouTube**\n- Uses extracted pre-signed URLs\n- Enables instant sharing across platforms\n\n\n\n\n\n\n\n\n",
+        "height": 416,
+        "width": 432,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        2080,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "fb3d5017-ac02-4e9a-8857-c6113c84d4c2",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 800,
+        "width": 384,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1696,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "b81c90fd-97b5-48f6-93e9-39d72a969026",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cc547cf5-7a72-47e2-9909-9045dac565fe",
+              "name": "Prompt",
+              "value": "I have given two images which includes a dress image and fashion. Always generate an image of how the fashion model would look like wearing that dress without any question or explanation. First image is fashion model image and second image is dress image. Give  valid link to download the image..",
+              "type": "string"
+            },
+            {
+              "id": "7e66aa09-0c74-4376-8945-b97c40ab8748",
+              "name": "Dress_Image_Link",
+              "value": "={{ $json.public_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        0,
+        688
+      ],
+      "id": "65556f0e-75d1-4118-9ff6-3d8f5370a6f2",
+      "name": "Give Prompt",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "# 🟦 Prompt \n#    Preparation\n\n- Construct the \n  final user prompt\n- Map:\n  - Model \n  image URL\n  - Dress \n  image URL\n",
+        "height": 320,
+        "width": 480
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -320,
+        608
+      ],
+      "typeVersion": 1,
+      "id": "f628ef57-2639-44f0-8359-ce2f5c1f424b",
+      "name": "Sticky Note7"
+    },
+    {
+      "parameters": {
+        "content": "# 🟨 Input & Image Upload\n\n- User uploads a dress image via **Form Trigger**.\n- Model image is downloaded from predefined URL.\n",
+        "height": 480,
+        "width": 480,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -320,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "d858a1ee-4f03-4c57-b89c-98ffe52d2b00",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "authentication": "oAuth2",
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1453239288987648093",
+          "mode": "id"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1453239992628547665",
+          "mode": "list",
+          "cachedResultName": "test",
+          "cachedResultUrl": "https://discord.com/channels/1453239288987648093/1453239992628547665"
+        },
+        "content": "Here is the generated image",
+        "options": {},
+        "files": {
+          "values": [
+            {}
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.discord",
+      "typeVersion": 2,
+      "position": [
+        1840,
+        304
+      ],
+      "id": "a01ee2a2-b4d3-429f-9b6f-993d9a70baf1",
+      "name": "Send to Discord",
+      "webhookId": "7c7e5be7-6c8b-49d8-8585-47bb2a8f6b87",
+      "credentials": {
+        "discordOAuth2Api": {
+          "id": "uOu4syUaVyxfUBKO",
+          "name": "Discord account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "amount": 1
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        480,
+        544
+      ],
+      "id": "d0cba3b2-41c7-46eb-8637-033de1c9d367",
+      "name": "Wait",
+      "webhookId": "f3bd1966-66c2-4fe1-818c-9df20331062b"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "de80bed8-114f-4cdd-ada8-0aa8ad675ead",
+              "name": "Model_Image_Link",
+              "value": "={{ $json.public_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        464,
+        720
+      ],
+      "id": "b4a8e543-b462-4464-a114-a7dd58cd990a",
+      "name": "Set Mapping"
+    },
+    {
+      "parameters": {
+        "operation": "file",
+        "fileOperation": "upload"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        0,
+        464
+      ],
+      "id": "74acd5b4-2b7b-496a-9aee-15e18209d748",
+      "name": "Upload Model Image",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "url": "=https://t4.ftcdn.net/jpg/08/73/42/81/360_F_873428119_1xVTs0fzMc3X09VK8m1BZIFla2yyMVXg.jpg",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        0,
+        272
+      ],
+      "id": "3cd1cc2c-1353-4b26-aa3b-8f501e8dffdb",
+      "name": "Download Model Image"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        272,
+        336
+      ],
+      "id": "b00c6f8c-170c-4018-a032-7f52a5f43120",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        448,
+        336
+      ],
+      "id": "e594be8b-0d61-469e-a622-236ff3d030a7",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "operation": "file",
+        "fileOperation": "upload"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        -240,
+        464
+      ],
+      "id": "9e10880d-251b-47a4-b60b-eb7aee4d3c77",
+      "name": "Upload Dress Image",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "chatCompletion",
+        "prompt": {
+          "messages": [
+            {
+              "content": "={{ $json.data[0].Prompt || $json.data[1].Prompt  }}"
+            }
+          ]
+        },
+        "inputType": "image",
+        "imageUrls": {
+          "url": [
+            {
+              "url": "={{ $json.data[1].Model_Image_Link || $json.data[0].Model_Image_Link }}"
+            },
+            {
+              "url": "={{ $json.data[0].Dress_Image_Link || $json.data[1].Dress_Image_Link }}"
+            }
+          ]
+        }
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        736,
+        736
+      ],
+      "id": "2e76b803-0872-4289-90a0-38ba28949458",
+      "name": "Generate Image",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "chatCompletion",
+        "prompt": {
+          "messages": [
+            {
+              "content": "=Generate a fashion video of fashion model walking with this dress. Always generate a video of how the fashion model would look like wearing that dress without any question or explanation. Give valid link to download the video with no problem."
+            }
+          ]
+        },
+        "inputType": "image",
+        "imageUrls": {
+          "url": [
+            {
+              "url": "={{ $json.public_url }}"
+            }
+          ]
+        }
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        976,
+        496
+      ],
+      "id": "bbed95f4-be41-4021-8773-7dd062c87fe9",
+      "name": "Generate Video",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      },
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "resource": "video",
+        "operation": "upload",
+        "title": "Virtual Try On using VLM Run",
+        "regionCode": "BD",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.youTube",
+      "typeVersion": 1,
+      "position": [
+        1840,
+        752
+      ],
+      "id": "d0195758-a6d6-4060-99da-0cd03a7d8dcb",
+      "name": "Upload a video",
+      "credentials": {
+        "youTubeOAuth2Api": {
+          "id": "OVeTVAwPcyf8kahr",
+          "name": "YouTube account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# 🟥 VLM Run – Image & Video Generation\n\n- Uses **VLM Run Chat Completion**\n- Input type: `image`\n- Generates:\n  • Virtual Try-On Image (model wearing dress)\n  • Fashion Video (person walking with the dress)\n- Requires:\n  • Model image URL\n  • Dress image URL\n- Output:\n  • Valid download URL\n\n",
+        "height": 800,
+        "width": 512,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        640,
+        128
+      ],
+      "typeVersion": 1,
+      "id": "c96ea955-7abe-42a0-9bf9-a87315d93d6e",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "operation": "artifacts",
+        "objectId": "={{ ($json.choices[0].message.content.match(/(?:<img_ref>)?(img_[a-zA-Z0-9]+)(?:<\\/img_ref>)?/) || [null, null])[1] }}",
+        "sessionId": "={{ $json.session_id }}"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        528
+      ],
+      "id": "b8ac3f77-e9ac-4c74-b80f-1c2aa3a2159f",
+      "name": "Get Image Artifact",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "file",
+        "fileOperation": "upload"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        992,
+        736
+      ],
+      "id": "ddbd7044-0854-48c9-b131-b6414cfa09b4",
+      "name": "Upload Generated Image",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "artifacts",
+        "objectId": "={{ ($json.choices[0].message.content.match(/(?:<img_ref>)?(url_[a-zA-Z0-9]+)(?:<\\/img_ref>)?/) || [null, null])[1] }}",
+        "sessionId": "={{ $json.session_id }}"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        784
+      ],
+      "id": "ad121202-cd12-4a26-bea3-3499bf193453",
+      "name": "Get Video Artifact",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "WSiI4CO3xR3o7pNJ",
+          "name": "VLM Run account 11"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Upload Image": {
+      "main": [
+        [
+          {
+            "node": "Upload Dress Image",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Download Model Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Give Prompt": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "Generate Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Mapping": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Model Image": {
+      "main": [
+        [
+          {
+            "node": "Set Mapping",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Model Image": {
+      "main": [
+        [
+          {
+            "node": "Upload Model Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Dress Image": {
+      "main": [
+        [
+          {
+            "node": "Give Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Image": {
+      "main": [
+        [
+          {
+            "node": "Get Image Artifact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Video": {
+      "main": [
+        [
+          {
+            "node": "Get Video Artifact",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Image Artifact": {
+      "main": [
+        [
+          {
+            "node": "Send to Discord",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Image",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Upload Generated Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upload Generated Image": {
+      "main": [
+        [
+          {
+            "node": "Generate Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Video Artifact": {
+      "main": [
+        [
+          {
+            "node": "Upload a video",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send Image",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "95301dd7-332c-4f1b-85d2-3d2e562a9ad2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0a7ae129a7d703150135f6cc24d0469f20ffd22b5ed59c23ee3e0608264e6d98"
+  },
+  "id": "0MXN1iCbkka2vHKL",
+  "tags": []
+}
