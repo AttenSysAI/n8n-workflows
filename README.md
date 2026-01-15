@@ -1,77 +1,59 @@
-<div align="center"> <p align="center" style="width: 100%;"> <img src="https://raw.githubusercontent.com/vlm-run/.github/refs/heads/main/profile/assets/vlm-black.svg" alt="VLM Run Logo" width="80" style="margin-bottom: -5px; vertical-align: middle; padding-right: 5px;"><br> </p> <h2>VLM Run AI Cookbooks</h2> <p align="center"> <a href="https://vlm.run"><b>Website</b></a> | <a href="https://app.vlm.run/"><b>Platform</b></a> | <a href="https://github.com/vlm-run/vlmrun-hub"><b>Hub</b></a> | <a href="https://docs.vlm.run/"><b>Docs</b></a> | <a href="https://vlm.run/blog"><b>Blog</b></a> | <a href="https://discord.gg/AMApC2UzVY"><b>Discord</b></a> </p> <p align="center"> <a href="https://discord.gg/AMApC2UzVY"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-purple?color=%235765F2&label=discord&logo=discord"></a> <a href="https://twitter.com/vlmrun"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/vlmrun.svg?style=social&logo=twitter"></a> </p> </div>
-
-# 🔥 What’s Inside
-
-## ✅ n8n Workflow Library
-- Google Drive → AI pipelines  
-- Image redaction & annotation  
-- Audio/video-to-text pipelines  
-- Text + image hybrid data workflows  
-- Automated meeting summarization  
-- Document OCR + vector extraction  
-- Custom webhook-trigger automations  
-
-## 🤖 AI Workflows with VLM Run
-- Image-to-image style transfer  
-- Photo → painting conversions  
-- Artistic variations  
-- Batch image transformation  
-- Professional headshot generation (19 camera angles)  
-- Vision-language hybrid answering  
-- Image-based reasoning & data extraction  
+<div align="center">
+  <img src="https://raw.githubusercontent.com/vlm-run/.github/refs/heads/main/profile/assets/vlm-black.svg" alt="VLM Run Logo" width="80" />
+  <h1 align="center">VLM Run AI Cookbooks + n8n Workflows</h1>
+  <p align="center">
+    <a href="https://vlm.run"><strong>Website</strong></a> |
+    <a href="https://app.vlm.run/"><strong>Platform</strong></a> |
+    <a href="https://github.com/vlm-run/vlmrun-hub"><strong>VLM Run Hub</strong></a> |
+    <a href="https://docs.vlm.run/"><strong>Docs</strong></a> |
+    <a href="https://vlm.run/blog"><strong>Blog</strong></a> |
+    <a href="https://discord.gg/AMApC2UzVY"><strong>Discord</strong></a>
+  </p>
+  <p align="center">
+    <a href="https://discord.gg/AMApC2UzVY"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-purple?logo=discord"></a>
+    <a href="https://twitter.com/vlmrun"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/vlmrun.svg?style=social&logo=twitter"></a>
+  </p>
+</div>
 
 ---
 
-# 📚 Learn the Docs — VLM Run Platform
+## 🔥 Overview
 
-This repo includes cookbooks demonstrating how to use **VLM Run’s image-to-image agent** in Python.
+This repository contains:
 
-## 🧩 Prerequisites
-- **Python 3.10+**  
-- **API Key:** `VLMRUN_API_KEY` (Get one from https://app.vlm.run)  
-- Install packages:
+✔️ **n8n Workflow Library** – ready-to-import automation templates  
+✔️ **AI Cookbooks for VLM Run** – notebooks and examples showing how to use the VLM Run APIs in Python and n8n
 
-```bash
-pip install vlmrun[openai] cachetools pillow requests numpy
-```
+VLM Run is a developer-friendly **Visual AI platform** that enables extraction, transformation, and generation from visual data (images, documents, videos) with structured JSON outputs and visual reasoning capabilities. :contentReference[oaicite:0]{index=0}
 
 ---
 
-# ▶ Running the Notebooks
+## 📦 What's Inside
 
-### **In Google Colab**
-Click the **Colab badge** next to each notebook.
-
-### **Locally (Jupyter)**
-- Ensure Python 3.10+  
-- Set `VLMRUN_API_KEY`  
-- Open `.ipynb` → run cells top-to-bottom  
-
----
-
-# 📒 Cookbooks
-
-| Name | Type | Colab |
-|------|:----:|:-----:|
-| Image-to-Image Style Transfer | `image-to-image` | *(Add badge after publishing)* |
-| Professional Headshot Generation (19 Angles) | `image-gen` | *(Add badge after publishing)* |
-
-> **Reminder:** Replace `<YOUR_ORG>/<YOUR_REPO>` after pushing the repo.
-
----
-
-# 📂 Repository Structure
-
-```
+### 📁 Repository Structure
 n8n-workflows/
- ├── workflows/              # n8n JSON workflows
- ├── ai-cookbooks/           # VLM Run image notebooks
- ├── assets/                 # Icons, diagrams, media
- ├── docs/                   # Documentation extensions
- └── README.md
-```
+├── workflows/ # n8n JSON workflows
+├── ai-cookbooks/ # VLM Run Python notebooks & examples
+├── assets/ # Icons, diagrams, media
+├── docs/ # Extended documentation
+└── README.md
 
----
+
+## 📚 n8n Workflow Library
+
+The `workflows/` folder contains `.json` files that can be **imported directly** in an n8n instance:
+
+1. Open n8n (self-hosted or cloud)
+2. Go to **Workflows → Import**
+3. Upload a workflow `.json`
+4. Configure node credentials (API keys, tokens, etc.)
+
+Typical integrations include:
+- Google Drive  
+- Custom Webhooks  
+- OpenAI / VLM Run Visual AI  
+- Slack / Notion / Sheets automations  
+
 
 # ⚙️ Setup
 
