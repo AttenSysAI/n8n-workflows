@@ -35,12 +35,6 @@ n8n-workflows/
 
 ├── workflows/ # n8n JSON workflows
 
-├── ai-cookbooks/ # VLM Run Python notebooks & examples
-
-├── assets/ # Icons, diagrams, media
-
-├── docs/ # Extended documentation
-
 └── README.md
 
 
