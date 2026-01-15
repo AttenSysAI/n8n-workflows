@@ -33,7 +33,7 @@ VLM Run is a developer-friendly **Visual AI platform** that enables extraction, 
 ### 📁 Repository Structure
 n8n-workflows/
 
-├── workflows/ # n8n JSON workflows
+├── workflows
 
 └── README.md
 
