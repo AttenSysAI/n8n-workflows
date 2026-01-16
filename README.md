@@ -37,15 +37,15 @@ Typical integrations include:
 
 ## 📄 Workflow Index
 
-| **Workflow Name** | **Use Case** |
-|-------------------|--------------|
-| **AI Fashion Virtual Try-On with Image & Video Generation for Telegram, Discord & YouTube** | Perfect for virtual try-ons, AI fashion demos or content automation pipelines.|
-| **Auto Meeting Summarizer with Google Drive, VLM Run to Sheets** | Summarize meeting notes from records. |
-| **Face Redaction Using VLM Run Chat Completion** | Privacy-preservation by blurring face images in media.|
-| **Generate UGC marketing videos for eCommerce with VLM Run , Open A** | Generate marketing videos for businesses. |
-| **Image to Ghibli Art Using VLM Run with Discord, Telegram, Pushover** | Convert real image to ghibli style. |
-| **Video Generation from First Frame and Last Frame using VLM Run** | Generates a smooth transition video between two input frames. |
-| **Write a WordPress post with AI (starting from a few keywords)** | Generate wordpress post using AI. |
+| **Workflow Name** | **Use Case** | **Last updated** |
+|-------------------|--------------|------------------|
+| **AI Fashion Virtual Try-On with Image & Video Generation for Telegram, Discord & YouTube** | Perfect for virtual try-ons, AI fashion demos or content automation pipelines.| 16-01-2026 |
+| **Auto Meeting Summarizer with Google Drive, VLM Run to Sheets** | Summarize meeting notes from records. | 16-01-2026 |
+| **Face Redaction Using VLM Run Chat Completion** | Privacy-preservation by blurring face images in media.| 16-01-2026 |
+| **Generate UGC marketing videos for eCommerce with VLM Run , Open A** | Generate marketing videos for businesses. | 16-01-2026 |
+| **Image to Ghibli Art Using VLM Run with Discord, Telegram, Pushover** | Convert real image to ghibli style. | 16-01-2026 |
+| **Video Generation from First Frame and Last Frame using VLM Run** | Generates a smooth transition video between two input frames. | 16-01-2026 |
+| **Write a WordPress post with AI (starting from a few keywords)** | Generate wordpress post using AI. | 16-01-2026 |
 
 # ⚙️ Setup
 
