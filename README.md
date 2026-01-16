@@ -1,90 +1,125 @@
-## 🔥 Overview
-
-This repository contains:
-
-✔️ **n8n Workflow Library** – ready-to-import automation templates  
-✔️ **AI Cookbooks for VLM Run** – notebooks and examples showing how to use the VLM Run APIs in Python and n8n
-
-VLM Run is a developer-friendly **Visual AI platform** that enables extraction, transformation, and generation from visual data (images, documents, videos) with structured JSON outputs and visual reasoning capabilities. :contentReference[oaicite:0]{index=0}
+<div align="center">
+<p align="center" style="width: 100%;">
+    <img src="./assets/attensys-logo.png" alt="AttenSys Logo" width="80" style="margin-bottom: -5px; vertical-align: middle; padding-right: 10px;">
+    <img src="https://n8n.io/favicon.ico" alt="n8n Logo" width="50" style="margin-bottom: -5px; vertical-align: middle;"><br>
+</p>
+<h2>AttenSys - n8n Workflow Templates</h2>
+<p align="center">
+A collection of ready-to-import <b>n8n workflow templates</b> for automation
+</p>
+<p align="center">
+<a href="https://github.com/attensys/n8n-workflows/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/license-Apache--2.0-blue"></a>
+<a href="https://discord.gg/v3rTUufp"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-purple?color=%235765F2&label=discord&logo=discord"></a>
+<a href="https://x.com/AttenSysAI"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/AttenSysAI.svg?style=social&logo=twitter"></a>
+</p>
+</div>
 
 ---
 
-## 📦 What's Inside
+## 🔥 Overview
 
-### 📁 Repository Structure
-n8n-workflows/
+This repository contains **production-ready n8n workflow templates** that you can import and use immediately.
 
-├── workflows
+Each workflow includes:
+- 📄 **JSON file** – Ready to import into n8n
+- 📖 **Documentation** – Step-by-step setup guide
+- 📸 **Screenshot** – Visual preview of the workflow
 
-└── README.md
-
-
-## 📚 n8n Workflow Library
-
-The `workflows/` folder contains `.json` files that can be **imported directly** in an n8n instance:
-
-1. Open n8n (self-hosted or cloud)
-2. Go to **Workflows → Import**
-3. Upload a workflow `.json`
-4. Configure node credentials (API keys, tokens, etc.)
-
-Typical integrations include:
-- Google Drive  
-- Custom Webhooks  
-- OpenAI / VLM Run Visual AI  
-- Slack / Notion / Sheets automations  
-
+---
 
 ## 📄 Workflow Index
 
-| **Workflow Name** | **Use Case** | **Last updated** |
-|-------------------|--------------|------------------|
-| **AI Fashion Virtual Try-On with Image & Video Generation for Telegram, Discord & YouTube** | Perfect for virtual try-ons, AI fashion demos or content automation pipelines.| 16-01-2026 |
-| **Auto Meeting Summarizer with Google Drive, VLM Run to Sheets** | Summarize meeting notes from records. | 16-01-2026 |
-| **Face Redaction Using VLM Run Chat Completion** | Privacy-preservation by blurring face images in media.| 16-01-2026 |
-| **Generate UGC marketing videos for eCommerce with VLM Run , Open A** | Generate marketing videos for businesses. | 16-01-2026 |
-| **Image to Ghibli Art Using VLM Run with Discord, Telegram, Pushover** | Convert real image to ghibli style. | 16-01-2026 |
-| **Video Generation from First Frame and Last Frame using VLM Run** | Generates a smooth transition video between two input frames. | 16-01-2026 |
-| **Write a WordPress post with AI (starting from a few keywords)** | Generate wordpress post using AI. | 16-01-2026 |
-
-# ⚙️ Setup
-
-### 1️⃣ Install n8n  
-https://docs.n8n.io/installation
-
-### 2️⃣ Import Workflows  
-n8n → **Import** → upload JSON from `/workflows`
-
-### 3️⃣ Configure API Keys  
-Depending on workflow:
-
-- VLM Run  
-- Google Drive  
-- OpenAI-style agents  
-- Notion / Sheets / Slack  
-- Webhooks  
+| **Workflow** | **Description** |
+|--------------|-----------------|
+| [AI Fashion Virtual Try-On](./workflows/ai-fashion-virtual-try-on/) | Virtual try-ons, AI fashion demos for Telegram, Discord & YouTube |
+| [Auto Meeting Summarizer](./workflows/auto-meeting-summarizer/) | Summarize meeting recordings from Google Drive to Sheets |
+| [Face Redaction](./workflows/face-redaction/) | Privacy-preservation by blurring faces in images |
+| [UGC Marketing Videos](./workflows/ugc-marketing-videos/) | Generate UGC marketing videos for eCommerce |
+| [Image to Ghibli Art](./workflows/image-to-ghibli-art/) | Convert images to Studio Ghibli style |
+| [Video Generation (First/Last Frame)](./workflows/video-generation-first-last-frame/) | Generate smooth transition videos between two frames |
+| [WordPress Post with AI](./workflows/wordpress-post-with-ai/) | Generate complete WordPress posts from keywords |
 
 ---
 
-# 🆘 Support & Resources
+## 🚀 Quick Start
 
-### 📖 Docs  
-https://docs.vlm.run/
+### 1. Install n8n
 
-### 💬 Discord  
-https://discord.gg/AMApC2UzVY
+```bash
+# Using npm
+npm install n8n -g
 
-### 🐦 Twitter  
-https://twitter.com/vlmrun
+# Or using Docker
+docker run -it --rm --name n8n -p 5678:5678 n8nio/n8n
+```
+
+For detailed installation instructions, see the [n8n documentation](https://docs.n8n.io/installation/).
+
+### 2. Import a Workflow
+
+1. Open n8n at `http://localhost:5678`
+2. Go to **Workflows → Import**
+3. Upload `workflow.json` from any workflow folder
+4. Configure the required credentials (see each workflow's README)
 
 ---
 
-# ⭐ Contributing
+## 📦 Repository Structure
 
-Pull requests welcome! You can add:
+```
+n8n-workflows/
+├── workflows/
+│   ├── ai-fashion-virtual-try-on/
+│   │   ├── workflow.json
+│   │   ├── README.md
+│   │   └── screenshot.png
+│   ├── auto-meeting-summarizer/
+│   ├── face-redaction/
+│   ├── ugc-marketing-videos/
+│   ├── image-to-ghibli-art/
+│   ├── video-generation-first-last-frame/
+│   └── wordpress-post-with-ai/
+└── README.md
+```
 
-- New n8n workflows  
-- Image/AI pipelines  
-- Integration templates  
-- Cookbook notebooks  
+Each workflow folder contains:
+- `workflow.json` – Import this into n8n
+- `README.md` – Setup instructions and documentation
+- `screenshot.png` – Visual preview of the workflow
 
+---
+
+## ⭐ Contributing
+
+We welcome contributions! You can add:
+
+- 🔄 New n8n workflows
+- 🖼️ AI automation pipelines
+- 🔗 Integration templates
+
+### Adding a New Workflow
+
+1. Create a new folder under `workflows/` (use kebab-case naming)
+2. Add your `workflow.json` file
+3. Add a `README.md` with documentation
+4. Add a `screenshot.png` of your workflow
+5. Update this README with your workflow
+6. Submit a pull request
+
+---
+
+## 🆘 Support
+
+<table>
+  <tr>
+    <td align="center"><a href="https://docs.n8n.io/"><b>📖 n8n Docs</b></a></td>
+    <td align="center"><a href="https://discord.gg/v3rTUufp"><b>💬 Discord</b></a></td>
+    <td align="center"><a href="https://x.com/AttenSysAI"><b>🐦 Twitter</b></a></td>
+  </tr>
+</table>
+
+---
+
+## 📄 License
+
+This project is licensed under the Apache 2.0 License - see the [LICENSE](LICENSE) file for details.
