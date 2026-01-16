@@ -1,6 +1,6 @@
 <div align="center">
 <p align="center" style="width: 100%;">
-    <img src="./assets/attensys-logo.png" alt="AttenSys Logo" width="80" style="margin-bottom: -5px; vertical-align: middle; padding-right: 10px;">
+    <img src="./assets/attensys-logo.png" alt="AttenSys Logo" width="120" style="margin-bottom: -5px; vertical-align: middle; padding-right: 10px;">
     <img src="https://n8n.io/favicon.ico" alt="n8n Logo" width="50" style="margin-bottom: -5px; vertical-align: middle;"><br>
 </p>
 <h2>AttenSys - n8n Workflow Templates</h2>
@@ -97,14 +97,15 @@ We welcome contributions! You can add:
 - 🖼️ AI automation pipelines
 - 🔗 Integration templates
 
-### Adding a New Workflow
+👉 **See the [Contributing Guide](./docs/CONTRIBUTING.md) for detailed instructions.**
 
-1. Create a new folder under `workflows/` (use kebab-case naming)
-2. Add your `workflow.json` file
-3. Add a `README.md` with documentation
-4. Add a `screenshot.png` of your workflow
-5. Update this README with your workflow
-6. Submit a pull request
+### Quick Steps
+
+1. Fork the repository
+2. Create a new folder under `workflows/` (use kebab-case naming)
+3. Add `workflow.json`, `README.md`, and `screenshot.png`
+4. Update this README with your workflow
+5. Submit a pull request
 
 ---
 
