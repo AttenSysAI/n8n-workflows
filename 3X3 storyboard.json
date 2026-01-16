@@ -1,0 +1,163 @@
+{
+  "name": "3X3 storyboard",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        -80
+      ],
+      "id": "a389998c-4497-40b8-8941-4a5c66932eb6",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "chatCompletion",
+        "prompt": {
+          "messages": [
+            {
+              "content": "Generate a professional image with 3x3 film storyboard grid, 9 square panels. Each panel is a separate, distinct scene with a black border. Cinematic DreamWorks/Pixar CGI style.  [Global Style]: Summer afternoon in a secret mountain meadow, lush wildflowers, warm golden sun, dappled light. Character: Young medieval boy with auburn hair and green eyes. Companion: Small hatchling dragon with iridescent pink-purple scales.  Panel 1 [Top-Left]: WIDE establishing shot. Boy lying on his back in tall meadow grass, small dragon perched on his chest, both looking up at the sky.  Panel 2 [Top-Center]: MEDIUM action shot. Boy running joyfully through flowers; small dragon flying clumsily alongside him, wings flapping wildly.  Panel 3 [Top-Right]: CLOSE-UP. Boy laughing with eyes closed, the tiny dragon playfully tangled in his auburn hair.  Panel 4 [Middle-Left]: OVER-SHOULDER shot. Boy's hand offering a small fish from a stream; dragon looking at the fish with suspicion.  Panel 5 [Middle-Center]: MEDIUM shot at stream edge. Boy leaning down, teaching the dragon to drink from the water; both reflections visible on the surface.  Panel 6 [Middle-Right]: TENDER CLOSE-UP. Small dragon fast asleep curled in the boy's lap; boy's hand resting protectively near it.  Panel 7 [Bottom-Left]: WIDE golden hour shot. Silhouetted against the sunset, the dragon successfully flies a short distance onto the boy's outstretched arm.  Panel 8 [Bottom-Center]: TWO-SHOT CLOSE-UP. Dragon curled around the boy's neck like a scarf; both sitting on a rock watching the sun dip below mountains.  Panel 9 [Bottom-Right]: WIDE high-angle shot at dusk. Boy walking on a path leading out of the meadow, dragon perched confidently on his shoulder, long shadows stretching.  Technical: 3x3 layout, exactly 9 different images."
+            }
+          ]
+        },
+        "responseFormat": "{\n  \"type\": \"json_schema\",\n    \"schema\": {\n      \"type\": \"object\",\n      \"properties\": {\n        \"object_id\": {\n          \"type\": \"string\",\n          \"pattern\": \"^[a-z]+_[0-9a-f]{6}$\",\n          \"description\": \"The artifact object ID only (e.g., img_5ae97f, url_94e682, vid_123456)\"\n        }\n      },\n      \"required\": [\"object_id\"],\n      \"additionalProperties\": false\n    },\n    \"strict\": true\n}"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        128,
+        0
+      ],
+      "id": "078dc7ce-3d3d-4e92-8e55-078c4fcda9d7",
+      "name": "VLM Run",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "O5EsLQ8MNaM4AZZy",
+          "name": "VLM Run account 15"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "artifacts",
+        "objectId": "={{ $json.choices[0].message.content.object_id }}",
+        "sessionId": "={{ $json.session_id }}"
+      },
+      "type": "@vlm-run/n8n-nodes-vlmrun.vlmRun",
+      "typeVersion": 1,
+      "position": [
+        528,
+        -48
+      ],
+      "id": "cbe3fb3c-4242-44a6-8f85-ed76c3f23063",
+      "name": "VLM Run1",
+      "credentials": {
+        "vlmRunApi": {
+          "id": "O5EsLQ8MNaM4AZZy",
+          "name": "VLM Run account 15"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "# 📌 3X3 storyboard generation\n* Allow users to generate a 3X3 image following the sequence of a story.\n* VLM Run Orion generates the 3X3 image following the prompt of the user. \n* The generated image can be downloaded.",
+        "width": 560,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -96,
+        -400
+      ],
+      "typeVersion": 1,
+      "id": "d0fb7b3d-071c-430c-b787-afc0fca52d7c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## 🚀 Trigger: Execute Workflow\n\n* This node initializes the flow",
+        "height": 432,
+        "width": 368,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -384,
+        -240
+      ],
+      "typeVersion": 1,
+      "id": "1b07fd12-ebcc-40c0-ba2d-37db2d1c7edd",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "## 🧠 Chat Completion\n\n* **Input**: Storyboard prompt entered here.\n* **Auth**: Requires VLM Run Account & API Key.\n* **Model**: Choose vlmrun-orion-1 (:fast/:auto/:pro).\n* **Output**: Returns a JSON object containing:               \n    * `object_id`\n    * `session_id`",
+        "height": 432,
+        "width": 400,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -16,
+        -240
+      ],
+      "typeVersion": 1,
+      "id": "13f94efd-db1f-45a9-883c-33cdf751cd8a",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## 📥 Final Export\n\n* **Input:** Fetches `object_id` AND `session_id` from the Chat Completion node.\n* **Action:** Retrieves the 3x3 storyboard artifact.\n* **Result:** The generated image is ready for viewing or downloading.",
+        "height": 432,
+        "width": 400,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        384,
+        -240
+      ],
+      "typeVersion": 1,
+      "id": "4ce619a9-618b-4479-b969-f0875e3bc5a8",
+      "name": "Sticky Note3"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "VLM Run",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VLM Run": {
+      "main": [
+        [
+          {
+            "node": "VLM Run1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "45c3ccd2-8ae8-4787-9435-dd6b75958939",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0a7ae129a7d703150135f6cc24d0469f20ffd22b5ed59c23ee3e0608264e6d98"
+  },
+  "id": "ZyOZQfVYtFaNqTTR",
+  "tags": []
+}
