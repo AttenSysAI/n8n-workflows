@@ -1,22 +1,3 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/vlm-run/.github/refs/heads/main/profile/assets/vlm-black.svg" alt="VLM Run Logo" width="80" />
-  <h1 align="center">VLM Run AI Cookbooks + n8n Workflows</h1>
-  <p align="center">
-    <a href="https://vlm.run"><strong>Website</strong></a> |
-    <a href="https://app.vlm.run/"><strong>Platform</strong></a> |
-    <a href="https://github.com/vlm-run/vlmrun-hub"><strong>VLM Run Hub</strong></a> |
-    <a href="https://docs.vlm.run/"><strong>Docs</strong></a> |
-    <a href="https://vlm.run/blog"><strong>Blog</strong></a> |
-    <a href="https://discord.gg/AMApC2UzVY"><strong>Discord</strong></a>
-  </p>
-  <p align="center">
-    <a href="https://discord.gg/AMApC2UzVY"><img alt="Discord" src="https://img.shields.io/badge/discord-chat-purple?logo=discord"></a>
-    <a href="https://twitter.com/vlmrun"><img alt="Twitter Follow" src="https://img.shields.io/twitter/follow/vlmrun.svg?style=social&logo=twitter"></a>
-  </p>
-</div>
-
----
-
 ## 🔥 Overview
 
 This repository contains:
@@ -53,6 +34,18 @@ Typical integrations include:
 - OpenAI / VLM Run Visual AI  
 - Slack / Notion / Sheets automations  
 
+
+## 📄 Workflow Index
+
+| **Workflow Name** | **Use Case** |
+|-------------------|--------------|
+| **AI Fashion Virtual Try-On with Image & Video Generation for Telegram, Discord & YouTube** | Perfect for virtual try-ons, AI fashion demos or content automation pipelines.|
+| **Auto Meeting Summarizer with Google Drive, VLM Run to Sheets** | Summarize meeting notes from records. |
+| **Face Redaction Using VLM Run Chat Completion** | Privacy-preservation by blurring face images in media.|
+| **Generate UGC marketing videos for eCommerce with VLM Run , Open A** | Generate marketing videos for businesses. |
+| **Image to Ghibli Art Using VLM Run with Discord, Telegram, Pushover** | Convert real image to ghibli style. |
+| **Video Generation from First Frame and Last Frame using VLM Run** | Generates a smooth transition video between two input frames. |
+| **Write a WordPress post with AI (starting from a few keywords)** | Generate wordpress post using AI. |
 
 # ⚙️ Setup
 
