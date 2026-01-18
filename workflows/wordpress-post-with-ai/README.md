@@ -9,6 +9,7 @@ Automatically generate complete, SEO-friendly WordPress blog posts from just a f
 ## 🎯 Use Case
 
 Transform a simple list of keywords into a fully structured blog post with:
+
 - AI-generated title and subtitle
 - Multiple chapters with coherent content
 - Introduction and conclusions
@@ -30,12 +31,12 @@ Transform a simple list of keywords into a fully structured blog post with:
 
 ## 📦 Required Integrations
 
-| Integration | Purpose |
-|-------------|---------|
-| **VLM Run** | Featured image generation |
-| **OpenAI** | Content generation (title, structure, chapters) |
-| **WordPress** | Post creation and media upload |
-| **Wikipedia** | Fact-checking and information gathering |
+| Integration   | Purpose                                         |
+| ------------- | ----------------------------------------------- |
+| **VLM Run**   | Featured image generation                       |
+| **OpenAI**    | Content generation (title, structure, chapters) |
+| **WordPress** | Post creation and media upload                  |
+| **Wikipedia** | Fact-checking and information gathering         |
 
 ## 🔑 VLM Run Setup
 
@@ -61,11 +62,11 @@ This workflow uses VLM Run for Visual AI capabilities.
 
 ## 📝 Form Inputs
 
-| Field | Description |
-|-------|-------------|
-| Keywords | Comma-separated topics for the article |
-| Number of chapters | 1-10 chapters |
-| Max words count | Target word count for the article |
+| Field              | Description                            |
+| ------------------ | -------------------------------------- |
+| Keywords           | Comma-separated topics for the article |
+| Number of chapters | 1-10 chapters                          |
+| Max words count    | Target word count for the article      |
 
 ## 📋 Output Features
 
