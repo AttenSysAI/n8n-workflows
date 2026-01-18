@@ -29,11 +29,11 @@ Automatically generate authentic User-Generated Content (UGC) style marketing vi
 
 ## 📦 Required Integrations
 
-| Integration | Purpose |
-|-------------|---------|
-| **VLM Run** | Visual AI for analysis, script generation, and video creation |
-| **OpenAI** | Prompt extraction and parsing |
-| **Google Drive** | Store generated videos |
+| Integration      | Purpose                                                       |
+| ---------------- | ------------------------------------------------------------- |
+| **VLM Run**      | Visual AI for analysis, script generation, and video creation |
+| **OpenAI**       | Prompt extraction and parsing                                 |
+| **Google Drive** | Store generated videos                                        |
 
 ## 🔑 VLM Run Setup
 
